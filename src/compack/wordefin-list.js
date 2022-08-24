@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { restBase } from '../helper/rest-helper'
 import DeleConfirm from "./dele-confirm"
 import PropTypes from 'prop-types'
-import { Link } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 function WordefinList({ kws }) {
     const [wds, setWds] = useState(null)
@@ -51,6 +51,11 @@ function WordefinList({ kws }) {
         }
         setWordefin(null)
     }
+    const navig = useNavigate()
+    function handleModifying(wd) {
+        sessionStorage.setItem('' + wd.id, JSON.stringify({w: wd.word, d: wd.defin}))
+        navig(`wd/${wd.id}`)
+    }
     return (
         <>
             <h4>{heading}</h4>
@@ -60,7 +65,8 @@ function WordefinList({ kws }) {
                     {' '}
                     <span>{wd.defin}</span>
                     {' '}
-                    <Link to={`wd/${wd.id}`}>修改</Link>
+                    {/* <Link to={`wd/${wd.id}`}>修改</Link> */}
+                    <button onClick={() => handleModifying(wd)}>修改</button>
                     <button onClick={() => setWordefin(wd)}>删除</button>
                 </li>)}
             </ul>}

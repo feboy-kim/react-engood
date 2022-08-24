@@ -6,6 +6,7 @@ function WordefinEdit() {
     let { id } = useParams()
     const [word, setWord] = useState("")
     const [defin, setDefin] = useState("")
+    const [orig, setOrig] = useState(null)
     const wordChanged = ev => {
         setWord(ev.target.value)
     }
@@ -13,20 +14,20 @@ function WordefinEdit() {
         setDefin(ev.target.value)
     }
     function isInvalid() {
-        return word.length < 2 || defin.length < 2
+        const invalid = word.length < 2 || defin.length < 2
+        if (orig) return invalid || (word === orig.w && defin === orig.d)
+        else return invalid
     }
     const [error, setError] = useState(null)
     useEffect(() => {
-        if (id > 0) {
-            fetch(`${restBase}/words/${id}`).then(resp => {
-                if (!resp.ok) {
-                    throw new Error('Getting wordefins failed')
-                }
-                return resp.json()
-            }).then(wd => {
-                setWord(wd.word)
-                setDefin(wd.defin)
-            }).catch(ex => setError(ex))
+        if (id && sessionStorage.getItem(id)) {
+            const wd = JSON.parse(sessionStorage.getItem(id))
+            setOrig(wd)
+            if (wd) {
+                setWord(wd.w)
+                setDefin(wd.d)
+            }
+            sessionStorage.removeItem(id)
         }
     }, [id])
     const navig = useNavigate()
