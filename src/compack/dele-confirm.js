@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react"
-import { restBase } from '../helper/rest-helper'
+import { restBase } from '../helper/rest-fetcher'
 import PropTypes from 'prop-types'
 
 function DeleConfirm({ wd, confirmed }) {
@@ -8,7 +8,7 @@ function DeleConfirm({ wd, confirmed }) {
         if (wd) {
             dialogRef.current?.showModal()
         } else {
-            dialogRef.current?.close()
+            // dialogRef.current?.close()
         }
     }, [wd])
     const [err, setErr] = useState(null)

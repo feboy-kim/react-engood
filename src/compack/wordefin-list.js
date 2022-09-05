@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { restBase } from '../helper/rest-helper'
+import { restGetWordefins } from '../helper/rest-fetcher'
 import DeleConfirm from "./dele-confirm"
 import PropTypes from 'prop-types'
 import { useNavigate } from "react-router-dom"
@@ -12,7 +12,6 @@ function WordefinList({ kws }) {
         if (kws) {
             const initial = kws.initial
             const tailine = kws.tailine
-            let url = ""
             if (initial.length >= 1) {
                 if (tailine.length >= 1) {
                     setHeading(`Initial: ${initial} and Tailine: ${tailine}`)
@@ -26,17 +25,13 @@ function WordefinList({ kws }) {
                     setHeading("")
                 }
             }
-            url = `${restBase}/${initial}/${tailine}/words`
-            if (url.length > restBase.length) {
-                fetch(url, {
-                    method: 'GET'
-                }).then(resp => {
-                    if (!resp.ok) {
-                        throw new Error('Getting wordefins failed')
-                    }
-                    return resp.json()
-                }).then(data => setWds(data)).catch(error => setErr(error))
-            }
+            restGetWordefins(initial, tailine).then(gotten => {
+                if (gotten.err) {
+                    setErr(gotten.err)
+                } else {
+                    setWds(gotten.wds)
+                }
+            })
         }
     }, [kws])
     const [wordefin, setWordefin] = useState(null)
@@ -52,25 +47,24 @@ function WordefinList({ kws }) {
         setWordefin(null)
     }
     const navig = useNavigate()
-    function handleModifying(wd) {
-        sessionStorage.setItem('' + wd.id, JSON.stringify({w: wd.word, d: wd.defin}))
+    function handleModify(wd) {
+        sessionStorage.setItem('' + wd.id, JSON.stringify({ w: wd.word, d: wd.defin }))
         navig(`wd/${wd.id}`)
     }
     return (
         <>
-            <h4>{heading}</h4>
+            <h4 id="initial-tailine">{heading}</h4>
             {wds && <ul>
                 {wds.map(wd => <li key={wd.id}>
                     <span>{wd.word}</span>
                     {' '}
                     <span>{wd.defin}</span>
                     {' '}
-                    {/* <Link to={`wd/${wd.id}`}>修改</Link> */}
-                    <button onClick={() => handleModifying(wd)}>修改</button>
+                    <button onClick={() => handleModify(wd)}>修改</button>
                     <button onClick={() => setWordefin(wd)}>删除</button>
                 </li>)}
             </ul>}
-            {err && <p>{err.toString()}</p>}
+            {err && <p title="failure">{err.toString()}</p>}
             <DeleConfirm wd={wordefin} confirmed={handleConfirmed} />
         </>
     )

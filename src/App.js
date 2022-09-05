@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import AdminLogin from "./compack/admin-login";
 import MasterHome from "./compack/master-home";
 import WordefinEdit from "./compack/wordefin-edit";
 
@@ -8,6 +9,7 @@ function App() {
       <h1>英文单词首尾检索</h1>
       <Routes>
         <Route path="/" element={<MasterHome />}></Route>
+        <Route path="/login" element={<AdminLogin />}></Route>
         <Route path="wd/:id" element={<WordefinEdit />}></Route>
       </Routes>
     </div>

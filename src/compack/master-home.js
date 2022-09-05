@@ -13,6 +13,7 @@ function MasterHome() {
       <SearchingBar kwSelected={kwSelected} />
       {keyWords && <WordefinList kws={keyWords} />}
       <Link to="wd/0">新建</Link>
+      <Link to="/login">登录</Link>
     </>
   );
 }

@@ -1,7 +1,13 @@
 import { rest } from "msw";
+import { restBase } from "../helper/rest-fetcher";
 
 export const handlers = [
-    rest.get('/o//words', (req, res, ctx) => {
+    rest.get(`${restBase}///words`, (req, res, ctx) => {
+        return res(
+            ctx.status(400),
+        )
+    }),
+    rest.get(`${restBase}/o//words`, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json([
@@ -10,7 +16,7 @@ export const handlers = [
             ])
         )
     }),
-    rest.get('//o/words', (req, res, ctx) => {
+    rest.get(`${restBase}//o/words`, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json([
@@ -19,16 +25,17 @@ export const handlers = [
             ])
         )
     }),
-    rest.get('/t/o/words', (req, res, ctx) => {
+    rest.get(`${restBase}/t/o/words`, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.json([
                 { id: 1, word: 'to', defin: '对于；为了；(表示方向)到；向；(表示间接关系)给' },
-                { id: 2, word: 'two', defin: '二；两个' }
+                { id: 2, word: 'two', defin: '二；两个' },
+                { id: 3, word: 'techno', defin: '现代电子乐；高技术音乐' }
             ])
         )
     }),
-    rest.post('/words', (req, res, ctx) => {
+    rest.post(`${restBase}/my/words`, (req, res, ctx) => {
         return res(
             ctx.status(201),
             ctx.json({
@@ -36,12 +43,14 @@ export const handlers = [
             })
         )
     }),
-    rest.post('/words/11', (req, res, ctx) => {
+    rest.post(`${restBase}/my/words/:id`, (req, res, ctx) => {
+        const { id } = req.params
         return res(
             ctx.status(200)
         )
     }),
-    rest.delete('/words/11', (req, res, ctx) => {
+    rest.delete(`${restBase}/my/words/:id`, (req, res, ctx) => {
+        const { id } = req.params
         return res(
             ctx.status(200)
         )
