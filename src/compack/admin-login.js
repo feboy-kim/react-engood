@@ -6,9 +6,9 @@ import LoginForm from "./login-form"
 function AdminLogin() {
     const [error, setError] = useState(null)
     const navig = useNavigate()
-    function onAuthenticated(authen) {
-        if (authen) {
-            setToken(authen.token)
+    function onSignIn(signed) {
+        if (signed) {
+            setToken(signed.token)
             navig("/")
         } else {
             setError('Authentication failed')
@@ -16,7 +16,7 @@ function AdminLogin() {
     }
     return (
         <div>
-            <LoginForm onSubmitted={onAuthenticated} />
+            <LoginForm onLogin={onSignIn} />
             <Link to="/">取消</Link>
             {error && <p title="failure">{error.toString()}</p>}
         </div>

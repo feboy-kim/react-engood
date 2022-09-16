@@ -14,13 +14,13 @@ function WordefinList({ kws }) {
             const tailine = kws.tailine
             if (initial.length >= 1) {
                 if (tailine.length >= 1) {
-                    setHeading(`Initial: ${initial} and Tailine: ${tailine}`)
+                    setHeading(`首字母: ${initial} 尾字母: ${tailine}`)
                 } else {
-                    setHeading(`Initial: ${initial}`)
+                    setHeading(`首字母: ${initial}`)
                 }
             } else {
                 if (tailine.length >= 1) {
-                    setHeading(`Tailine: ${tailine}`)
+                    setHeading(`尾字母: ${tailine}`)
                 } else {
                     setHeading("")
                 }
@@ -53,7 +53,7 @@ function WordefinList({ kws }) {
     }
     return (
         <>
-            <h4 id="initial-tailine">{heading}</h4>
+            <h4 id="initial-tailine">检索结果（{heading}）</h4>
             {wds && <ul>
                 {wds.map(wd => <li key={wd.id}>
                     <span>{wd.word}</span>

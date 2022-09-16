@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import SearchingBar from "./searching-bar";
+import SearchBar from "./search-bar";
 import WordefinList from "./wordefin-list";
 
 function MasterHome() {
@@ -9,12 +9,12 @@ function MasterHome() {
     setKeywords({ initial, tailine })
   }
   return (
-    <>
-      <SearchingBar kwSelected={kwSelected} />
+    <div className="w-full h-full">
+      <SearchBar kwSelected={kwSelected} />
       {keyWords && <WordefinList kws={keyWords} />}
       <Link to="wd/0">新建</Link>
-      <Link to="/login">登录</Link>
-    </>
+      <Link to="/login" className="right-1 bottom-1">登录</Link>
+    </div>
   );
 }
 

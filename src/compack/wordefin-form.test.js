@@ -24,7 +24,7 @@ describe('wordefin-form', () => {
         expect(wordNode).toBeDisabled()
         expect(definNode).toBeDisabled()
         expect(buttonode).toBeDisabled()
-        await waitFor(() => expect(mockSaved).toHaveBeenCalledWith(true))
+        await waitFor(() => expect(mockSaved).toHaveBeenCalled())
     })
     test('update item', async () => {
         const wd = { w: 'logo', d: '商标；标识；图形' }
@@ -57,6 +57,6 @@ describe('wordefin-form', () => {
         expect(wordNode).toBeDisabled()
         expect(definNode).toBeDisabled()
         expect(buttonode).toBeDisabled()
-        await waitFor(() => expect(mockSaved).toHaveBeenCalledWith(true))
+        await waitFor(() => expect(mockSaved).toHaveBeenCalled())
     })
 })

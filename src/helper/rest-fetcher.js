@@ -1,3 +1,4 @@
+import { Base64 } from "js-base64"
 import { getToken } from "./item-storage"
 
 export const restBase = process.env.REACT_APP_REST_BASE || "http://localhost:21323"
@@ -27,17 +28,13 @@ export const restPostWordefin = async (wordefin, id) => {
     return resp.ok
 }
 
-export const restPostCredential = async (un, pw) => {
-    const url = `${restBase}/login`
+export const restLoginCredential = async (un, pw) => {
+    const url = `${restBase}/u/login`
     const resp = await fetch(url, {
-        method: 'POST',
+        method: 'GET',
         headers: {
-            'Content-Type': 'application/json;charset=utf-8'
-        },
-        body: JSON.stringify({
-            username: un,
-            password: pw
-        })
+            'Authorization': `Basic ${Base64.encode(un + ":" + pw)}`
+        }
     })
     if (resp.ok) {
         return await resp.json()

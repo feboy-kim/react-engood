@@ -35,6 +35,15 @@ export const handlers = [
             ])
         )
     }),
+    rest.get(`${restBase}/u/login`, (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json({
+                token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWduYW1lIjoic2VhbnQiLCJleHAiOjE2NjI1ODg1MDh9" +
+                    ".GctlJ0aozyWLIgmzvHsLyKZiWufy9iL3QgIOtJ58Fos"
+            })
+        )
+    }),
     rest.post(`${restBase}/my/words`, (req, res, ctx) => {
         return res(
             ctx.status(201),

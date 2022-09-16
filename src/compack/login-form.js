@@ -1,43 +1,43 @@
 import { useState } from "react"
-import { restPostCredential } from "../helper/rest-fetcher"
+import { restLoginCredential } from "../helper/rest-fetcher"
 import PropTypes from 'prop-types'
 
-function LoginForm({onSubmitted}) {
+function LoginForm({onLogin}) {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const unameChanged = ev => {
+    const unChanged = ev => {
         setUsername(ev.target.value)
     }
-    const pwordChanged = ev => {
+    const pwChanged = ev => {
         setPassword(ev.target.value)
     }
     function isInvalid() {
         return username.length < 2 || password.length < 5
     }
-    const [submitting, setSubmitting] = useState(false)
-    async function onSubmit() {
-        setSubmitting(true)
-        onSubmitted(await restPostCredential(username, password))
-        setSubmitting(false)
+    const [signing, setSigning] = useState(false)
+    async function onSignIn() {
+        setSigning(true)
+        onLogin(await restLoginCredential(username, password))
+        setSigning(false)
     }
     return(
         <>
             <p>登录</p>
             <div>
                 <label htmlFor="un">户名</label>
-                <input type="text" id="un" value={username} onChange={unameChanged} disabled={submitting} />
+                <input type="text" id="un" value={username} onChange={unChanged} disabled={signing} />
             </div>
             <div>
                 <label htmlFor="pw">密码</label>
-                <input type="text" id="pw" value={password} onChange={pwordChanged} disabled={submitting} />
+                <input type="password" id="pw" value={password} onChange={pwChanged} disabled={signing} />
             </div>
-            <button title="submit" onClick={onSubmit} disabled={isInvalid() || submitting}>提交</button>
+            <button title="sign" onClick={onSignIn} disabled={isInvalid() || signing}>提交</button>
         </>
     )
 }
 
 LoginForm.propTypes = {
-    onSubmitted: PropTypes.func.isRequired
+    onLogin: PropTypes.func.isRequired
 }
 
 export default LoginForm
